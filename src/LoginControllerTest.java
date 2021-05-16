@@ -1,5 +1,5 @@
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.sql.SQLException;
 
@@ -22,7 +22,13 @@ public class LoginControllerTest {
     @Test
     public void loginInvalidAll() throws SQLException, ClassNotFoundException {
         LoginController log = new LoginController();
-        Assert.assertEquals(true, log.login("tp", "feeee"));
+        Assert.assertEquals(false, log.login("tp", "feeee"));
+    }
 
+    @Test
+    public void loginSqlInjection() throws SQLException, ClassNotFoundException {
+        LoginController log = new LoginController();
+        Assert.assertEquals(false, log.login("Katya", "NOT(NULL)"));
+        Assert.assertEquals(false, log.login("NOT(NULL)", "12345"));
     }
 }

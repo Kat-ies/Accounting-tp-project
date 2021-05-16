@@ -1,8 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 public class DbHandler {
@@ -49,14 +45,16 @@ public class DbHandler {
     // -------- Поиск по таблице--------
     public static String searchInDB(String login, String password) throws ClassNotFoundException {
         try {
-            resSet = statement.executeQuery("SELECT * FROM users WHERE password is " + password);
+            PreparedStatement prep = conn.prepareStatement("SELECT * FROM users WHERE login is (?)");
+            prep.setString(1, login);
+            resSet = prep.executeQuery();
 
             //Вообще здесь можно сделать один красивый запрос в бд, но java почему-то кидает ошибку,
             //хотя сам sql на запрос отвечает.
             while (resSet.next()) {
-                String databaseLogin = resSet.getString("login");
+                String databasePassword = resSet.getString("password");
                 String role = resSet.getString("role");
-                if (databaseLogin.equals(login)) {
+                if (databasePassword.equals(password)) {
                     return role;
                 }
             }
