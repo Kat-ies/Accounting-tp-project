@@ -22,7 +22,7 @@ public class LoginControllerTest {
     @Test
     public void loginInvalidAll() throws SQLException, ClassNotFoundException {
         LoginController log = new LoginController();
-        Assert.assertEquals(true, log.login("tp", "feeee"));
+        Assert.assertEquals(false, log.login("tp", "feeee"));
 
     }
 }
