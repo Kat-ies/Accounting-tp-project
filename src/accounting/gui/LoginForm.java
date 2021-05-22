@@ -1,13 +1,17 @@
+package accounting.gui;
+
+import accounting.*;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class GuiLoginForm implements LoginForm {
+public class LoginForm implements ILoginForm {
     private JFrame frame;
     private JTextField loginField;
     private JPasswordField passwordField;
     private LoginController controller;
 
-    GuiLoginForm(LoginController controller) {
+    public LoginForm(LoginController controller) {
         this.controller = controller;
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -58,22 +62,25 @@ public class GuiLoginForm implements LoginForm {
         frame.setVisible(true);
     }
 
+    public void reset() {
+        loginField.setText("");
+        passwordField.setText("");
+    }
+
     @Override
     public void login() {
-        String role;
+        User user;
         try {
-            role = controller.login(loginField.getText(), String.copyValueOf(passwordField.getPassword()));
-        } catch (Exception exc) {
+            user = controller.login(new UserCredentials(loginField.getText(), String.copyValueOf(passwordField.getPassword())));
+        } catch (LoginException exc) {
             JOptionPane.showMessageDialog(frame, "Error: " + exc.getMessage(), "Login", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (role.equals("error")) {
-            JOptionPane.showMessageDialog(frame, "Invalid login or password", "Login", JOptionPane.ERROR_MESSAGE);
+            reset();
             return;
         }
         JOptionPane.showMessageDialog(frame,
-                "Successfully logged in as " + loginField.getText() + " with role " + role,
+                "Successfully logged in as " + loginField.getText() + " with role " + user.getRole().toString().toLowerCase(),
                 "Login", JOptionPane.INFORMATION_MESSAGE);
+        MainFormFactory.create(user).show();
         close();
     }
 }

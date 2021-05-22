@@ -1,4 +1,6 @@
-public class User {
+package accounting;
+
+public class UserCredentials {
     private String login;
     private String password;
 
@@ -18,7 +20,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String login, String password) {
+    public UserCredentials(String login, String password) {
         this.login = login;
         this.password = password;
     }

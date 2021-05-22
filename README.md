@@ -20,7 +20,7 @@
 INSERT INTO users VALUES ('Katya', '11111', 'admin');
 INSERT INTO users VALUES ('Fedya', '11111', 'admin');
 INSERT INTO users VALUES ('Sasha', '11111', 'admin');
-INSERT INTO users VALUES ('User', '11111', 'user');
+INSERT INTO users VALUES ('User', '11111', 'accountant');
 
 UPDATE users SET password = '12345' WHERE login = 'Katya';
 
