@@ -24,8 +24,3 @@ UPDATE users SET password = '12345' WHERE login = 'Katya';
 
 SELECT  * FROM users;
 ```
-
-+ Диаграмма классов (чтобы было нагляднее)
-
-
-![diagram](https://github.com/Kat-ies/Accounting-tp-project/blob/backend/diagram.png)
